@@ -1,25 +1,27 @@
-import React from 'react';
+import React, { FC } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Router } from 'react-router-dom';
+import { SignUpPage } from './pages/signupPage';
+import { Routes } from 'react-router-dom';
+import { LoginPage } from './pages/loginPage';
+import { RecoilRoot } from 'recoil';
+import { TopPage } from './pages/topPage';
+import { Page404 } from './pages/page404';
+import { Auth0Provider } from '@auth0/auth0-react';
 
-function App() {
+const  App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RecoilRoot>
+        <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<TopPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path='/*' element={<Page404/>} />
+            </Routes>
+        </BrowserRouter>
+    </RecoilRoot>  
   );
 }
 
