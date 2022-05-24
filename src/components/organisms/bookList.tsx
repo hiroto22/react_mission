@@ -1,5 +1,5 @@
 import { Card, CardContent, Grid } from "@mui/material"
-import axios from "axios"
+import axios, { AxiosRequestConfig } from "axios"
 import { useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
@@ -15,26 +15,33 @@ type BookList ={
     reviewer:string
 }
 
-type Token = () => {
-    token:string
+type Token ={
+  Authorization:string
 }
-
 
 const URL = "https://api-for-missions-and-railways.herokuapp.com/books"
 
 export const BookList = () => {
-   const [token,setToken] = useState<Token>()
-   const [book,setBook] = useRecoilState(bookListState)
-   const bookList = useRecoilValue(bookListState)
-   console.log(localStorage)
-   const SetToken = (localStorage:any) => {
-       setToken(localStorage?.getItem("token"))
-    }
+  //  const [token,setToken] = useState<Token>();
+   const [book,setBook] = useRecoilState(bookListState);
+   const bookList = useRecoilValue(bookListState);
+   
+   const strage = localStorage.getItem("token")
+   const token = "Bearer "+strage
+  // const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTM0NzgzMTUsImlhdCI6IjIwMjItMDUtMjRUMTE6MzE6NTUuNTk2MjIwMDJaIiwic3ViIjoiNTQ1NDY1NTczNTQiLCJ1c2VyX2lkIjoiMzkzMjg0ZGMtNzk1Ni00MjlhLWJmZWEtMWEzNjhlNGIxOGY1In0.TVDOa36PiwVmNsiDISz-VdPgc7yrjYIq-qHzHcrzDEs"
+
+   console.log(token)
+
 
    useEffect(()=>{
        axios.get(URL,{
-        Authorization:token
-       })
+         headers:{
+           Authorization:token,
+          },
+         params:{
+           offset:20
+         }
+        })
        .then((res)=>{
            setBook(res.data)
         })
@@ -43,7 +50,6 @@ export const BookList = () => {
         })
    },[])
 
-  
 
     return(
      <Grid container justifyContent="center">
