@@ -1,17 +1,16 @@
 import { Card, CardContent, Grid } from "@mui/material";
-import axios from "axios";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
+import { useLogin } from "../../hooks/useLogin";
 import { RegisterButton } from "../atoms/registerButton"
 import { LoginMail } from "../molecules/loginMail"
 import { LoginPassword } from "../molecules/loginPassword"
 
 const URL = "https://api-for-missions-and-railways.herokuapp.com/signin"
 
+
 export const Login = () => {
-
-    const [inputMail, setInputMail] = useState("");
-    const [inputPassword, setInputPassword] = useState("");
-
+    const [inputMail, setInputMail] = useState("")
+    const [inputPassword, setInputPassword] = useState("")
 
     const onChangeMail:ChangeEventHandler<HTMLInputElement> = (e) =>{
         setInputMail(e.target.value);
@@ -19,20 +18,11 @@ export const Login = () => {
      const onChangePassword:ChangeEventHandler<HTMLInputElement> = (e) =>{
          setInputPassword(e.target.value)
      }
- 
-     const onClick = () =>{
-        axios.post(URL,{
-            email:inputMail,
-            password:inputPassword
-     })
-     .then((res)=>{
-         console.log(res)
-         localStorage.setItem("token",res.data.token)
-         })
-     .catch((err)=>{console.log(err)})
-     };
-    
-    console.log(localStorage)
+
+     const onClickLogin = useLogin()
+     
+    console.log(sessionStorage)
+
     return(
         <Grid container justifyContent="center" padding={5}>
             <Card sx={{width:800,minHeight:400}}>
@@ -51,7 +41,7 @@ export const Login = () => {
                                 <LoginPassword onChange={onChangePassword}/>
                             </Grid>
                             <Grid item >
-                                <RegisterButton onClick={onClick} item={"ログイン"}/>
+                                <RegisterButton onClick={()=>onClickLogin(inputMail,inputPassword)} item={"ログイン"}/>
                             </Grid>
                         </Grid>
                     </CardContent>

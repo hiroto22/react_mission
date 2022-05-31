@@ -1,20 +1,22 @@
 import { Card, CardContent, Grid } from "@mui/material"
-import axios from "axios"
 import { ChangeEventHandler, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useSingnup } from "../../hooks/useSingup"
 import { RegisterButton } from "../atoms/registerButton"
+import { signupFunc } from "../func/api/signupFunc"
 import { LoginMail } from "../molecules/loginMail"
 import { LoginName } from "../molecules/loginName"
 import { LoginPassword } from "../molecules/loginPassword"
 
-const URL = "https://api-for-missions-and-railways.herokuapp.com/users"
 
 
 export const Signup = () => {
     const [inputName, setInputName] = useState("");
     const [inputMail, setInputMail] = useState("");
     const [inputPassword, setInputPassword] = useState("");
+    const signUp = useSingnup()
 
-
+    const navigate = useNavigate()
     const onChangeName:ChangeEventHandler<HTMLInputElement> = (e) =>{
         setInputName(e.target.value)
     }
@@ -24,17 +26,10 @@ export const Signup = () => {
     const onChangePassword:ChangeEventHandler<HTMLInputElement> = (e) =>{
         setInputPassword(e.target.value)
     }
+    const onClickRegister = () =>{
+        signUp(inputName,inputMail,inputPassword)
+    }
     
-
-    const onClick = () =>{
-       axios.post(URL,{
-           name:inputName,
-           email:inputMail,
-           password:inputPassword
-    })
-    .then((res)=>{console.log(res)})
-    .catch((error)=>{console.log(error)})
-    };
 
     return(
         <Grid container justifyContent="center" padding={5}>
@@ -57,7 +52,7 @@ export const Signup = () => {
                             <LoginPassword onChange={onChangePassword}/>
                         </Grid>
                         <Grid item >
-                            <RegisterButton onClick={onClick} item={"新規登録"}/>
+                            <RegisterButton onClick={onClickRegister} item={"新規登録"}/>
                         </Grid>
                     </Grid>
                 </CardContent>

@@ -1,10 +1,16 @@
 import { Card, CardContent, Grid } from "@mui/material"
 import axios, { AxiosRequestConfig } from "axios"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
+import { useBookList } from "../../hooks/useBookList"
+import { useGetStorageToken } from "../../hooks/useGetStorageToken"
 import { bookListState } from "../../state/bookListState"
+import { OffsetNumState } from "../../state/offsetNumState"
+import { BackButton } from "../atoms/backButton"
+import { NextButton } from "../atoms/nextButton"
 import { ToAmazonButton } from "../atoms/toAmazonButton"
+import { BackButtonFunc } from "../func/button/backButtonFunc"
 
 type BookList ={
     id:string,
@@ -15,58 +21,57 @@ type BookList ={
     reviewer:string
 }
 
-type Token ={
-  Authorization:string
-}
 
-const URL = "https://api-for-missions-and-railways.herokuapp.com/books"
-
-export const BookList = () => {
-  //  const [token,setToken] = useState<Token>();
-   const [book,setBook] = useRecoilState(bookListState);
-   const bookList = useRecoilValue(bookListState);
+export const BookList = () => {   
+   const offsetNum= useRecoilValue(OffsetNumState)
+   const [number,setOffsetNum] = useRecoilState(OffsetNumState)
+   const token = useGetStorageToken();
    
-   const strage = localStorage.getItem("token")
-   const token = "Bearer "+strage
-  // const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTM0NzgzMTUsImlhdCI6IjIwMjItMDUtMjRUMTE6MzE6NTUuNTk2MjIwMDJaIiwic3ViIjoiNTQ1NDY1NTczNTQiLCJ1c2VyX2lkIjoiMzkzMjg0ZGMtNzk1Ni00MjlhLWJmZWEtMWEzNjhlNGIxOGY1In0.TVDOa36PiwVmNsiDISz-VdPgc7yrjYIq-qHzHcrzDEs"
-
+   const bookList = useBookList(token,offsetNum);
    console.log(token)
 
+   const onClickNextButton =()=>{
+     setOffsetNum(offsetNum+10)
+     console.log(offsetNum)
+   }
 
-   useEffect(()=>{
-       axios.get(URL,{
-         headers:{
-           Authorization:token,
-          },
-         params:{
-           offset:20
-         }
-        })
-       .then((res)=>{
-           setBook(res.data)
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
-   },[])
-
+   const onClickBackButton = () =>{
+    offsetNum<=0?setOffsetNum(0):setOffsetNum(offsetNum-10)
+     console.log(offsetNum)
+   }
 
     return(
-     <Grid container justifyContent="center">
+    <div>
+     <Grid container justifyContent="center" sx={{marginTop:"90px"}}>
+     <Suspense fallback={<div>loading</div>}>
        {bookList?.map((books:BookList)=>(
-          <Card sx={{width:500,height:300,margin:1}}>
+          <Card key={books.id} sx={{width:500,height:300,margin:1,backgroundColor:"#E7F2FA"}}>
             <CardContent>
-                <h2>{books.title}</h2>
+                <h2>
+                  <a href={`/detail/${books.id}`}>{books.title}</a>
+                </h2>
                 <p>{books.review}</p>
                 <SContributor>投稿者:{books.reviewer}</SContributor>
                 <ToAmazonButton url={books.url} />
             </CardContent>
           </Card> 
        ))}
+      </Suspense>
      </Grid>
+     <SDiv>
+      <BackButton onClick={onClickBackButton} />
+      {offsetNum>=1?<p>{offsetNum/10+1}ページ</p>:<p>1ページ</p>}
+      <NextButton onClick={onClickNextButton} />
+     </SDiv>
+    </div>
     )
 }
 
 const SContributor = styled.p`
     color:#009900;
+`
+const SDiv = styled.div`
+    display:flex ;
+    text-align:center ;
+    justify-content:center ;
 `

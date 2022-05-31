@@ -4,7 +4,7 @@ type Props = {
     item:string
 }
 
-export const LoginItem = (props:Props) => {
+export const Item = (props:Props) => {
     return(
         <p>{props.item}</p>
     )

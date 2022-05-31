@@ -1,5 +1,5 @@
 import { Input } from "../atoms/input"
-import { LoginItem } from "../atoms/loginItem"
+import { Item } from "../atoms/item"
 
 type Props = {
     onChange: React.ChangeEventHandler<HTMLInputElement>
@@ -9,8 +9,8 @@ type Props = {
 export const LoginPassword = (props:Props) => {
     return(
         <div>
-            <LoginItem item="パスワード" />
-            <Input placeholder="半角英数字" onChange={props.onChange}/>
+            <Item item="パスワード" />
+            <Input value="" type="password" placeholder="半角英数字" onChange={props.onChange}/>
         </div>
     )
 }

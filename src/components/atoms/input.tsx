@@ -3,12 +3,14 @@ import React from "react"
 type Props = {
     placeholder:string
     onChange: React.ChangeEventHandler<HTMLInputElement>
+    type:string,
+    value:string
 }
 
 
 
 export const Input= (props:Props) => {
     return(
-       <input placeholder={props.placeholder} onChange={props.onChange}></input>
+       <input  defaultValue={props.value} type={props.type} placeholder={props.placeholder} onChange={props.onChange}></input>
     )
 }

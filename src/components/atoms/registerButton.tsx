@@ -13,6 +13,8 @@ export const RegisterButton = (props:Props) => {
 }
 
 const SRegisterButton = styled.button`
+      width:100px ;
+      font-weight:bold ;
       padding:10px ;
       background-color:#6699FF ;
       color:white;

@@ -3,14 +3,15 @@ import { Item } from "../atoms/item"
 
 type Props = {
     onChange: React.ChangeEventHandler<HTMLInputElement>
+    value:any
 }
 
 
-export const LoginName = (props:Props) => {
+export const InputUrl = (props:Props) => {
     return(
         <div>
-            <Item item="名前" />
-            <Input value="" type="text" placeholder="鈴木一郎" onChange={props.onChange}/>
+            <Item item="URL" />
+            <Input value={props.value} type="url" placeholder="url" onChange={props.onChange} />
         </div>
     )
 }
