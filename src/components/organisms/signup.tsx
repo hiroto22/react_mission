@@ -3,7 +3,6 @@ import { ChangeEventHandler, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSingnup } from "../../hooks/useSingup"
 import { RegisterButton } from "../atoms/registerButton"
-import { signupFunc } from "../func/api/signupFunc"
 import { LoginMail } from "../molecules/loginMail"
 import { LoginName } from "../molecules/loginName"
 import { LoginPassword } from "../molecules/loginPassword"
@@ -32,7 +31,7 @@ export const Signup = () => {
     
 
     return(
-        <Grid container justifyContent="center" padding={5}>
+        <Grid container justifyContent="center" padding={10}>
             <Card sx={{width:800,minHeight:400}}>
                 <CardContent>
                     <Grid container spacing={1} direction="column" justifyContent="center" alignItems="center">

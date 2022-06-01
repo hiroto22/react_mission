@@ -1,4 +1,5 @@
-import { Card, CardContent, Grid } from "@mui/material"
+import { Card, CardContent, CircularProgress, Grid } from "@mui/material"
+import { Box } from "@mui/system"
 import axios, { AxiosRequestConfig } from "axios"
 import { Suspense, useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
@@ -10,7 +11,6 @@ import { OffsetNumState } from "../../state/offsetNumState"
 import { BackButton } from "../atoms/backButton"
 import { NextButton } from "../atoms/nextButton"
 import { ToAmazonButton } from "../atoms/toAmazonButton"
-import { BackButtonFunc } from "../func/button/backButtonFunc"
 
 type BookList ={
     id:string,
@@ -42,6 +42,8 @@ export const BookList = () => {
 
     return(
     <div>
+      {bookList?
+    <div>
      <Grid container justifyContent="center" sx={{marginTop:"90px"}}>
      <Suspense fallback={<div>loading</div>}>
        {bookList?.map((books:BookList)=>(
@@ -63,6 +65,8 @@ export const BookList = () => {
       {offsetNum>=1?<p>{offsetNum/10+1}ページ</p>:<p>1ページ</p>}
       <NextButton onClick={onClickNextButton} />
      </SDiv>
+    </div>
+    :<Box sx={{textAlign:"center",verticalAlign:"middle",marginTop:"200px"}}><CircularProgress /></Box>}
     </div>
     )
 }

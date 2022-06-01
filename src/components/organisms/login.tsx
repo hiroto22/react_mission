@@ -24,7 +24,7 @@ export const Login = () => {
     console.log(sessionStorage)
 
     return(
-        <Grid container justifyContent="center" padding={5}>
+        <Grid container justifyContent="center" padding={10}>
             <Card sx={{width:800,minHeight:400}}>
                 <CardContent>
                         <Grid container spacing={1} direction="column" justifyContent="center" alignItems="center">

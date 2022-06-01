@@ -17,7 +17,11 @@ export const useLogin = () =>{
           sessionStorage.setItem("token",res.data.token)
           console.log(res)
           })
-      .catch((err)=>{console.log(err)})
+      .catch((err)=>{
+          console.log(err)
+          alert(`${err} 
+         ログインできませんでした。もう一度お試し下さい。`)
+        })
 
       navigate("/")
        };

@@ -8,7 +8,6 @@ import { LoginPage } from './pages/loginPage';
 import { RecoilRoot } from 'recoil';
 import { TopPage } from './pages/topPage';
 import { Page404 } from './pages/page404';
-import { useAuth } from './hooks/useAuth';
 import { ProfilePage } from './pages/profilePage';
 import { BookRegistrationPage } from './pages/bookRegistrationPage';
 import { DetailPage } from './pages/detailPage';
@@ -21,8 +20,8 @@ const  App = () => {
     <RecoilRoot>
             <Routes>
               <Route path='/' element={<TopPage />} />
-              <Route path="/signup" element={token=="Bearer null"||token=="Bearer undefined"?<SignUpPage />:<Navigate to="/" />} />
-              <Route path="/login" element={token=="Bearer null"||token=="Bearer undefined"?<LoginPage />:<Navigate to="/" />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/login" element={<LoginPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path='/new' element={<BookRegistrationPage />} />
               <Route path='/detail/:id' element={<DetailPage />} />

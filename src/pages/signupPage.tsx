@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import { Header } from "../components/organisms/header"
 import {  Signup } from "../components/organisms/signup"
 import { useGetStorageToken } from "../hooks/useGetStorageToken"
@@ -8,16 +8,17 @@ import { useGetStorageToken } from "../hooks/useGetStorageToken"
 export const SignUpPage = () => {
     const token = useGetStorageToken()
     console.log(token)
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
-    // useEffect(()=>{
-    //     token?navigate("/"):console.log(token)
-    // },[])
 
     return(
         <div>
-            <Header />
-            <Signup />
+            {token=="Bearer null"||token=="Bearer undefined"?
+            <div>
+                <Header />
+                <Signup />
+            </div>
+            :<Navigate to="/" />}
         </div>
     )
 }

@@ -4,8 +4,9 @@ import axios from "axios"
 const URL = "https://api-for-missions-and-railways.herokuapp.com/users"
 
 
-export const EditProfileFunc = (token:string,name:string) =>{
-        axios.put(URL,{name:name},{
+export const useEditProfile = () =>{
+    const editProfile = async(token:string,name:string) =>{
+        await axios.put(URL,{name:name},{
             headers:{
                 Authorization:token
             }
@@ -14,4 +15,7 @@ export const EditProfileFunc = (token:string,name:string) =>{
             )
         .then((res)=>console.log(res))
         .catch((err)=>console.log(err))
+    }
+
+    return editProfile
 }

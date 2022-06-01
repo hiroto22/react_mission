@@ -1,9 +1,9 @@
 import { Card, CardContent, Grid } from "@mui/material"
 import { ChangeEventHandler, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useBookRegistration } from "../../hooks/useBookRegistration"
 import { useGetStorageToken } from "../../hooks/useGetStorageToken"
 import { RegisterButton } from "../atoms/registerButton"
-import { BookRegistrationFunc } from "../func/api/bookRegistrationFunc"
 import { InputDetail } from "../molecules/inputDetail"
 import { InputReview } from "../molecules/inputReview"
 import { InputTitle } from "../molecules/inputTitle"
@@ -18,11 +18,11 @@ export const BookRegistration = () => {
     const[detail,setDetail] = useState("")
     const[review,setReview] = useState("")
     const token = useGetStorageToken()
-
+    const bookRegistration = useBookRegistration()
     const navigate = useNavigate()
 
 
-    const onChangeTitle:ChangeEventHandler<HTMLInputElement> = (e) =>{
+     const onChangeTitle:ChangeEventHandler<HTMLInputElement> = (e) =>{
         setTitle(e.target.value);
      }
      const onChangeUrl:ChangeEventHandler<HTMLInputElement> = (e) =>{
@@ -35,13 +35,12 @@ export const BookRegistration = () => {
         setReview(e.target.value);
      }
      const onClickRegister = () =>{
-         BookRegistrationFunc(title,url,detail,review,token)
+         bookRegistration(title,url,detail,review,token)
          navigate("/")
      }
-     console.log(title,url,detail,review,token)
 
     return(
-        <Grid container justifyContent="center" padding={5} marginTop={8}>
+        <Grid container sx={{justifyContent:"center"}}   marginTop={8}>
         <Card sx={{width:800,minHeight:400}}>
             <CardContent>
                     <Grid container spacing={1} direction="column" justifyContent="center" alignItems="center" >

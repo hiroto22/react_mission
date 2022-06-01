@@ -1,4 +1,5 @@
 import React from "react"
+import styled from "styled-components"
 
 type Props = {
     placeholder:string
@@ -11,6 +12,10 @@ type Props = {
 
 export const Input= (props:Props) => {
     return(
-       <input  defaultValue={props.value} type={props.type} placeholder={props.placeholder} onChange={props.onChange}></input>
+       <SInput  defaultValue={props.value} type={props.type} placeholder={props.placeholder} onChange={props.onChange}></SInput>
     )
 }
+
+const SInput = styled.input` 
+  height: 35px;
+`

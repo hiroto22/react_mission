@@ -17,10 +17,9 @@ import { useNavigate } from "react-router-dom";
 export const Header = () =>{
     const token = useGetStorageToken();
     const name = useGetName(token);
-    const onClickLogoutButton = () =>{
+    const onClickLogoutButton = async() =>{
         sessionStorage.removeItem("token")
-        window.location.reload()
-        navigate("/")
+        navigate("/login")
     }
     
     const [open, setOpen] = useState(false);
